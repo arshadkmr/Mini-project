@@ -1,0 +1,91 @@
+<%if(isLoggedIn){%>
+    <%- include('../layouts/userLoggedHeader.ejs') %>
+        <% } else { %>
+            <%- include('../layouts/userHeader.ejs') %>
+                <% } %>
+                    <section class="content-wrapper">
+                        <div class="container mt-5">
+                            <div class="row ">
+                                <div class="col-lg-4 col-md-2">
+                                    <div class="section-title">
+                                        <div class="col-lg-12">
+                                            <div class="breadcrumb__links">
+                                                <a href="/home"><i class="fa fa-home"></i> Home</a>
+                                                <span>Categories</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8">
+                                    <ul class="filter__controls m-auto">
+                                        <% if(category){ %>
+                                            <% if(category.length>0){ %>
+                                                <%for(let i=0; i < category.length; i++) { %>
+                                                    <li data-filter="*"><a class="text-dark"
+                                                            href="/category-products?id=<%=category[i]._id%>">
+                                                            <%= category[i].names%>
+                                                        </a></li>
+                                                    </li>
+                                                    <%}%>
+                                                        <% } }%>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <% if(products.length>0) {
+                                        for(let i = 0; i < products.length; i++) { %>
+                                            <div class="col-md-3 mr-4">
+                                                <div class="card mb-5" style="width: 18rem;">
+                                                    <div class="m-auto">
+                                                        <% if(products[i].image) {%>
+                                                            <a href="/single-product?id=<%=products[i]._id%>"><img
+                                                                    src="/banners/<%=products[i].image[0]%>"
+                                                                    class="item-slick" width="250vw" height="250vh"></a>
+                                                            <% }else{%>
+                                                                Image Not found
+                                                                <%}%>
+                                                                    <hr>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <span style="font-weight: bold;">
+                                                                <%=products[i].name%>
+                                                            </span>
+                                                        </h5>
+                                                        <p class="card-text">
+                                                            Price: ₹<span style="font-weight: bold;">
+                                                                <%=products[i].price%>
+                                                            </span>/-
+                                                        </p>
+                                                        <hr>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-around;"
+                                                        class="mb-4">
+                                                        <div>
+                                                            <a href="/addToCart?id=<%=products[i]._id%>"
+                                                                class="btn btn-outline-success"
+                                                                style="width: 7vw;"><span
+                                                                    class="icon_bag_alt"></span>cart</a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="/addToWishlist?id=<%=products[i]._id%>"
+                                                                class="btn btn-round btn-outline-primary"
+                                                                style="width: 7vw;"><span
+                                                                    class="icon_heart_alt"></span>Wishlist</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } }else{ %>
+                                                <div>
+                                                    <div class="mt-2 mb-2">
+                                                        <h1 style="font-weight: bold; text-align: center;">
+                                                            Products not Found
+                                                        </h1>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                </div>
+                            </div>
+                            <%- include('../layouts/userFooter.ejs') %>

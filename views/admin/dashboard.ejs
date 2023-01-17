@@ -1,0 +1,111 @@
+<%- include('../layouts/adminHeader.ejs') %>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="mt-3 mb-0 pb-2">
+                    <div class="table-responsive">
+                        <h2 class="mb-3" style="text-align: center; color: white;">Users List</h2>
+                        <table class="table align-items-center table-flush table-borderless" id="myTable"
+                            style="text-align: center; color: white;">
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <% if(users.length> 0){
+                                    for(let i=0;i<users.length;i++){ %>
+                            <tr>
+                                <td>
+                                    <%=i+1%>
+                                </td>
+                                <td>
+                                    <%=users[i].name%>
+                                </td>
+                                <td>
+                                    <%=users[i].email%>
+                                </td>
+                                <td>
+                                    <%=users[i].mobile%>
+                                </td>
+                                <td>
+                                    <%if(users[i].is_verified===0){%>
+                                        <button type="button" class="btn"><a
+                                                href="/admin/block-user?id=<%=users[i]._id%>"
+                                                style="color: rgb(255, 255, 255); text-decoration: none;"
+                                                class="btn btn-outline-success unblock">Unblock</a></button>
+                                        <%}else{%>
+                                            <button type="button" class="btn"><a
+                                                    href="/admin/unblock-user?id=<%=users[i]._id%>"
+                                                    style="color: rgb(255, 255, 255); text-decoration: none; "
+                                                    class="btn btn-outline-danger block"> Block </a></button>
+                                            <%}%>
+                                </td>
+                            </tr>
+                            <% } }else{ %>
+                                <tr>
+                                    <td colspan="5">Users not found</td>
+                                </tr>
+                                <% } %>
+                                    </tr>
+                        </table>
+                        <a href="/admin/home" class="btn btn-light btn-round px-5">Go Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".block").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this)
+            Swal.fire({
+                title: 'Do you want to Block the user?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Yes, Block ',
+                denyButtonText: `No, Don't Block`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    //     Swal.fire('Saved!', '', 'success')
+                    // } else if (result.isDenied) {
+                    //     Swal.fire('Changes are not saved', '', 'info')
+                    location.href = self.attr("href")
+                }
+            })
+
+
+        })
+    </script>
+    <script>
+        $(".unblock").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this)
+            Swal.fire({
+                title: 'Do you want to Unblock the user?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Yes, Unblock ',
+                denyButtonText: `No, Don't Unblock`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    //     Swal.fire('Saved!', '', 'success')
+                    // } else if (result.isDenied) {
+                    //     Swal.fire('Changes are not saved', '', 'info')
+                    location.href = self.attr("href")
+                }
+            })
+
+
+        })
+    </script>
+
+
+
+
+
+    <%- include('../layouts/adminFooter.ejs') %>

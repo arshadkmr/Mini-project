@@ -1,0 +1,137 @@
+<%if(isLoggedIn){%>
+    <%- include('../layouts/userLoggedHeader.ejs') %>
+        <% } else { %>
+            <%- include('../layouts/userHeader.ejs') %>
+                <% } %>
+
+                    <!-- Breadcrumb Begin -->
+                    <div class="breadcrumb-option">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="breadcrumb__links">
+                                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                                        <span>Wishlist</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Breadcrumb End -->
+                    <!-- Shop Cart Section Begin -->
+                    <section class="shop-cart spad">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="shop__cart__table">
+                                        <% if(isLoggedIn) {%>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Total</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <% if(id) {%>
+                                                        <% if(wishlistProducts.item>0) {%>
+                                                            <% for(let key of wishlistProducts.item) {%>
+                                                                <td class="cart__product__item">
+                                                                    <img src="/banners/<%=key.productId.image[0]%>"
+                                                                        class="item-slick" width="250vw" height="250vh">
+                                                                    <div class="cart__product__item__title">
+                                                                        <h4>
+                                                                            <%=key.productId.name%>
+                                                                        </h4>
+                                                                        <div class="rating">
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__price">Price: ₹
+                                                                    <%=key.productId.price%>
+                                                                        /-
+                                                                </td>
+                                                                <td class="cart__quantity">
+                                                                    <div class="pro-qty">
+                                                                        Qty : <%=key.qty%>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__total">Total Price :
+                                                                    <%=key.productId.price*key.qty%>
+                                                                </td>
+                                                                <td class="cart__close"><a
+                                                                        href="/delete-wishlist?id=<%=key.productId._id%>"><span
+                                                                            class="icon_close mr-3" style="color: red;"></span></a></td>
+                                                                <td class="cart__close"><a
+                                                                        href="/addToCartDeleteWishlist?id=<%=key.productId._id%>"><span
+                                                                            class="icon_cart" style="color: green; background: #fff;"></span></a></td>
+                                                    </tr>
+                                                    <% } %> 
+                                                    <%  } else{ %>
+                                                        <td class="cart__product__item">
+                                                            <h3 class="text-center" style="color: rgb(0, 0, 0); font-weight: bold;">No Products
+                                                                Found</h3>
+                                                        </td>
+                                                        <% } } %>
+                                                            <% }else{ %>
+                                                                <td class="cart__product__item">
+                                                                    <div class="container">
+                                                                        <div class="container-fluid">
+                                                                            <h3 class="mt-5 mb-5"
+                                                                                style="font-weight: bold; color: grey;">
+                                                                                Please
+                                                                                <a href="
+                                                                /login" class="site-btn ">Login</a> to
+                                                                                Continue
+                                                                            </h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="cart__btn">
+                                        <a href="home">Continue Shopping</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="cart__btn update__btn">
+                                        <a href="#"><span class="icon_loading"></span> Update cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="discount__content">
+                                        <h6>Discount codes</h6>
+                                        <form action="#">
+                                            <input type="text" placeholder="Enter your coupon code">
+                                            <button type="submit" class="site-btn">Apply</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 offset-lg-2">
+                                    <div class="cart__total__procced">
+                                        <h6>Cart total</h6>
+                                                <a href="#" class="primary-btn">Proceed to checkout</a>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </section>
+                    <!-- Shop Cart Section End -->
+                    <%- include('../layouts/userFooter.ejs') %>

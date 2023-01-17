@@ -1,0 +1,163 @@
+<%if(isLoggedIn){%>
+    <%- include('../layouts/userLoggedHeader.ejs') %>
+        <% } else { %>
+            <%- include('../layouts/userHeader.ejs') %>
+                <% } %>
+                    <!-- Breadcrumb Begin -->
+                    <div class="breadcrumb-option">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="breadcrumb__links">
+                                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                                        <span>Shopping cart</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Breadcrumb End -->
+                    <!-- Shop Cart Section Begin -->
+                    <section class="shop-cart spad">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="shop__cart__table">
+                                        <% if(isLoggedIn===true) {%>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Total</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  
+                                                        <% if(id) {%>
+                                                        <% if(cartProducts.item>0) {%>
+                                                            
+                                                            <% for(let key of cartProducts.item) {%>
+                                                                <tr>
+                                                                <td class="cart__product__item">
+                                                                    <img src="/banners/<%=key.productId.image[0]%>"
+                                                                        class="item-slick" width="250vw" height="250vh">
+                                                                    <div class="cart__product__item__title">
+                                                                        <h4>
+                                                                            <%=key.productId.name%>
+                                                                        </h4>
+                                                                        <div class="rating">
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                            <i class="fa fa-star"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__price">Price: ₹
+                                                                    <%=key.productId.price%>
+                                                                        /-
+                                                                </td>
+                                                                <td class="cart__quantity">
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="hidden" id="productId"
+                                                                            value="<%= key.productId._id %>">
+                                                                        <input type="number" name="quantity" size="1"
+                                                                            class="quantity text-center input-number mr-2 qty m-auto border-0"
+                                                                            value="<%= key.qty %>" min="1" max="10">
+                                                                    </div>
+                                                                </td>
+                                                                <td 
+                                                                class="cart__total" id="sellingPrice">Total Price :
+                                                                    <%=key.productId.price*key.qty%>
+                                                                    <input type="hidden" id="productid"
+                                                                    value="<%= key.productId._id %>">
+                                                                </td>
+                                                                <td class="cart__close"><a
+                                                                        href="/delete-cart?id=<%=key.productId._id%>"><span
+                                                                            class="icon_close"
+                                                                            style="color: red;"></span></a></td>
+                                                    </tr>
+                                                    <% } %> 
+                                                    <%  } else{ %>
+                                                        <td class="cart__product__item">
+                                                            <h3 class="text-center" style="color: rgb(0, 0, 0); font-weight: bold;">No Products
+                                                                Found</h3>
+                                                        </td>
+                                                        <% }} %>
+                                                            <% } else{ %>
+                                                                <td class="cart__product__item">
+                                                                    <div class="container">
+                                                                        <div class="container-fluid">
+                                                                            <h3 class="mt-5 mb-5"
+                                                                                style="font-weight: bold; color: grey;">
+                                                                                Please
+                                                                                <a href="
+                                                                /login" class="site-btn ">Login</a> to
+                                                                                Continue
+                                                                            </h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if(isLoggedIn===true) {%>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="cart__btn">
+                                            <a href="home">Continue Shopping</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="cart__btn update__btn">
+                                            <a href="/cart"><span class="icon_loading"></span> Update cart</a>
+                                        </div>
+                                        <div class="cart__total__procced ml-5">
+                                            <h6>Cart total</h6>
+                                            <%if(id){%>
+                                                <ul>
+                                                    <li>Total <span id="total">₹ <%= cartProducts.totalPrice %>/-
+                                                        </span></li>
+                                                </ul>
+                                                <%}%>
+                                                    <a href="/checkout" class="primary-btn">Proceed to checkout</a>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    
+                                </div> -->
+                        </div>
+                    </section>
+                    <!-- Shop Cart Section End -->
+                    <script>
+                        const qty = document.querySelectorAll('.qty')
+                        const qtyHandler = async (e) => {
+                            try {
+                                const productId = e.target.parentElement.children[0].value
+                                const data = { qty: e.target.value }
+                                const response = await fetch(`/changeProductQty?id=${productId}`, {
+                                    method: 'post',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(data)
+                                })
+                                const value = await response.json()
+                                    e.target.parentElement.parentElement.nextElementSibling.innerText = value.price * e.target.value
+                                document.querySelector('#total').innerText =  value.totalPrice
+                            } catch (error) {
+                                console.log(error.message);
+                            }
+                        }
+                        qty.forEach(q => {
+                            q.addEventListener('change', qtyHandler)
+                        })
+                    </script>
+                    <%- include('../layouts/userFooter.ejs') %>

@@ -1,0 +1,103 @@
+<%- include('../layouts/adminHeader') %>
+    <!-- <div class="clearfix"></div> -->
+
+    <div class="content-wrapper">
+        <section class="container">
+            <div class="container-fluid">
+                <div class="pt-5 mt-3 pb-2">
+                    <div class="table-responsive">
+                        <h2 class="mb-3" style="text-align: center; color: white;">Category List</h2>
+                        <table class="table" style=" text-align: center; color: white;">
+                            <tr>
+                                <th>No</th>
+                                <th>Items</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <% if(category.length> 0){
+                                    for(let i=0;i<category.length;i++){ %>
+                            <tr>
+                                <td>
+                                    <%=i+1%>
+                                </td>
+                                <td>
+                                    <%=category[i].names%>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn"><a
+                                                href="/admin/edit-category?id=<%=category[i]._id%>"
+                                                style="color: rgb(255, 255, 255); text-decoration: none;"
+                                                class="btn btn-outline-warning">Edit</a></button>
+                                    <%if(category[i].isAvailable===0){%>
+                                        <button type="button" class="btn"><a
+                                                href="/admin/show-category?id=<%=category[i]._id%>"
+                                                style="color: rgb(255, 255, 255); text-decoration: none;"
+                                                class="btn btn-outline-success show">Show</a></button>
+                                        <%}else{%>
+                                            <button type="button" class="btn "><a
+                                                    href="/admin/block-category?id=<%=category[i]._id%>"
+                                                    style="color: rgb(255, 255, 255); text-decoration: none; "
+                                                    class="btn btn-outline-danger delete "> Hide </a></button>
+                                            <%}%>
+                                </td>
+                            </tr>
+                            <% } }else{ %>
+                                <tr>
+                                    <td colspan="5">Categories not found</td>
+                                </tr>
+                                <% } %>
+                                    </tr>
+                        </table>
+                        <a href="/admin/home" class="btn btn-light btn-round px-5">Go Back</a>
+                        <a href="/admin/addcategory" class="btn btn-light btn-round px-5">Add Categories</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $(".delete").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this)
+            Swal.fire({
+                title: 'Are you sure to delete the category?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    location.href = self.attr('href')
+
+                }
+            })
+        })
+    </script>
+
+
+
+    <script>
+        $(".show").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this)
+            Swal.fire({
+                title: 'Are you sure to show the category?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, show it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    location.href = self.attr('href')
+
+                }
+            })
+        })
+    </script>
+    <%- include('../layouts/adminFooter.ejs') %>

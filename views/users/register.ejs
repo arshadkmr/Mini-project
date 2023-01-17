@@ -1,0 +1,135 @@
+
+            <%- include('../layouts/userHeader.ejs') %>
+                    <div class="ex-form-1 pt-5 pb-5">
+                        <div class="container">
+                            <div class="col-xl-6 offset-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card-title" style="display: flex; justify-content: center;">
+                                            <h3 class="text-primary">Registration Form</h3>
+                                        </div>
+                                        <hr style="color: red;">
+                                        <% if(typeof message!=='undefined' ){ %>
+                                            <h3>
+                                                <p style="color: red;">
+                                                    <%= message%>
+                                                </p>
+                                            </h3>
+                                            <% } %>
+                                                <% if(typeof messages!=='undefined' ){ %>
+                                                    <h3>
+                                                        <p style="color: rgb(0, 133, 38);">
+                                                            <%= messages%>
+                                                        </p>
+                                                    </h3>
+                                                    <% } %>
+                                                        <form action="" method="post" onsubmit="return validation()">
+                                                            <div class="form-group pb-3">
+                                                                <span class="form-group pb-3" id="nameError"
+                                                                    style="color: red;"></span>
+                                                                <input type="text"
+                                                                    class="form-control form-control-rounded"
+                                                                    name="name" id="name" placeholder="Enter Your First Name">
+                                                            </div>
+                                                            <div class="form-group pb-3">
+                                                                <span class="form-group pb-3" id="nameError"
+                                                                    style="color: red;"></span>
+                                                                <input type="text"
+                                                                    class="form-control form-control-rounded"
+                                                                    name="lname" id="name" placeholder="Enter Your Last Name">
+                                                            </div>
+                                                            <div class="form-group pb-3">
+                                                                <span class="form-group pb-3" id="emailError"
+                                                                    style="color: red;"></span>
+                                                                <input type="text"
+                                                                    class="form-control form-control-rounded"
+                                                                    name="email" id="email"
+                                                                    placeholder="Enter Your Email Address">
+                                                            </div>
+                                                            <div class="form-group pb-3">
+                                                                <span class="form-group pb-3" id="mnoError"
+                                                                    style="color: red;"></span>
+                                                                <input type="text"
+                                                                    class="form-control form-control-rounded" name="mno"
+                                                                    id="mno" placeholder="Enter Your Mobile Number">
+                                                            </div>
+                                                            <div class="form-group pb-3">
+                                                                <span class="form-group pb-3" id="passwordError"
+                                                                    style="color: red;"></span>
+                                                                <input type="password"
+                                                                    class="form-control form-control-rounded"
+                                                                    name="password" id="password"
+                                                                    placeholder="Enter Password">
+                                                            </div>
+                                                            <div class="form-group pb-3">
+                                                                <span class="form-group pb-3" id="cPasswordError"
+                                                                    style="color: red;"></span>
+                                                                <input type="password"
+                                                                    class="form-control  form-control-rounded"
+                                                                    name="cPassword" id="cPassword"
+                                                                    placeholder="Confirm Password">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="submit" class="site-btn"><i
+                                                                        class="icon-lock"></i>
+                                                                    Register</button>
+                                                            </div>
+                                                            <hr>
+                                                            <p class="text-danger mb-2">Already have an account?</p>
+                                                            <div class="form-group">
+                                                                <a href="login" class="site-btn"><i
+                                                                        class="icon-lock"></i>
+                                                                    Login</a>
+                                                            </div>
+                                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        function validation() {
+                            const name = document.getElementById('name').value;
+                            const email = document.getElementById('email').value;
+                            const mno = document.getElementById('mno').value;
+                            const password = document.getElementById('password').value;
+                            const cPassword = document.getElementById('cPassword').value;
+
+                            const userCheck = /^[A-Za-z. ]{3,30}$/;
+                            const emailCheck = /^[A-Za-z_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+                            const mnoCheck = /^[0-9]{10}$/;
+                            const passwordCheck = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+                            if (userCheck.test(name)) {
+                                document.getElementById("nameError").innerHTML = ""
+                            } else {
+                                document.getElementById("nameError").innerHTML = "please enter name";
+                                return false;
+                            }
+                            if (emailCheck.test(email)) {
+                                document.getElementById("emailError").innerHTML = ""
+                            } else {
+                                document.getElementById("emailError").innerHTML = "please enter valid email"
+                                return false;
+                            }
+                            if (mnoCheck.test(mno)) {
+                                document.getElementById("mnoError").innerHTML = ""
+                            } else {
+                                document.getElementById("mnoError").innerHTML = "please enter 10 digit mobile number"
+                                return false;
+                            }
+                            if (passwordCheck.test(password)) {
+                                document.getElementById("passwordError").innerHTML = ""
+                            } else {
+                                document.getElementById("passwordError").innerHTML = "please enter valid password"
+                                return false;
+                            }
+                            if (cPassword.match(password)) {
+                                document.getElementById("cPasswordError").innerHTML = ""
+                            } else {
+                                document.getElementById("cPasswordError").innerHTML = "password does not match"
+                                return false;
+                            }
+                        }
+                    </script>
+                    <%- include('../layouts/userFooter.ejs') %>

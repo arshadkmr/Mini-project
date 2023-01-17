@@ -1,0 +1,45 @@
+<%- include('../layouts/userHeader.ejs') %>
+
+    <div class="ex-form-1 mt-5 pt-5 pb-5">
+        <div class="container">
+            <div class="col-xl-6 offset-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title" style="display: flex; justify-content: center;">
+                            <h3 class="text-danger">Login Here</h3>
+                        </div>
+                        <hr>
+                        <% if(typeof message!=='undefined' ){ %>
+                            <h3>
+                                <p style="color: red;">
+                                    <%= message%>
+                                </p>
+                            </h3>
+                            <% } %>
+                                <form action="" method="post">
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control form-control-rounded" name="email"
+                                            id="input-7" placeholder="Enter Your Email Address" required>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="password" class="form-control form-control-rounded" name="password"
+                                            id="input-9" placeholder="Enter Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="site-btn"><i class="icon-lock"></i>
+                                            Login</button>
+                                    </div>
+                                    <hr>
+                                    <p class="text-danger mb-2">Don't have an account? Sign up Here</p>
+                                    <div class="form-group">
+                                        <a href="register" class="site-btn text-light mr-5"><i class="icon-lock"></i>
+                                            Register</a>
+                                    </div>
+                                    <a href="/forgotpassword" class=" text-warning">Forgot Password?</a>
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../layouts/userFooter.ejs') %>

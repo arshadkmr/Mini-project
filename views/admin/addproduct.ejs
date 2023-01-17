@@ -1,0 +1,68 @@
+<%- include('../layouts/adminHeader.ejs') %>
+    <div class="ex-form-1 pt-2 mt-3 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 offset-xl-3">
+                    <div class="text-box mt-5 mb-5">
+                        <h2 style="color: white; text-align: center;">Add product</h2>
+                        <div>
+                            <% if(typeof messages!=='undefined' ){ %>
+                                <h4>
+                                    <p style="color: rgb(11, 139, 47);">
+                                        <%= messages%>
+                                    </p>
+                                </h4>
+                                <% } %>
+                                    <% if(typeof message!=='undefined' ){ %>
+                                        <h4>
+                                            <p style="color: rgb(255, 0, 0);">
+                                                <%= message%>
+                                            </p>
+                                        </h4>
+                                        <% } %>
+                        </div>
+                        <!-- Sign Up Form -->
+                        <form action="/admin/addproduct" encType="multipart/form-data" method="post">
+                            <div class="mb-4 form-floating">
+                                <input type="text" name="name" class="form-control" placeholder="Product Name" required>
+                                <!-- <label for="floatingInput">Name</label> -->
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <select name="category" class="mb-4 form-control" id="floatingInput2"
+                                    placeholder="Product Category" required>
+                                    <option value="" disabled selected>Category</option>
+                                    <% if(category.length>0){ %>
+                                        <% for(let i=0;i<category.length;i++){ %>
+                                            <option value="<%= category[i]._id %>">
+                                                <%=category[i].names %>
+                                            </option>
+                                            <%} }else{%>
+                                                <h4>No Categories found</h4>
+                                                <%}%>
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <input type="text" name="price" class="form-control" id="floatingPassword"
+                                    placeholder="Price" required>
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <input type="text" name="stock" class="form-control" id="floatingPassword"
+                                    placeholder="Stock" required>
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <textarea name="description" class="form-control" id="floatingInput2"
+                                    placeholder="Product description" style="height:7rem;" required></textarea>
+                            </div>
+                            <div class="mb-4 form-floating">
+                                <label for="floatingInput">Image</label>
+                                <input type="file" name="uploaded_file"  class="form-control" id="formFileMultiple" accept="image/png, image/jpg, image/jpeg, image/webp" multiple required>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-round">Submit</button>
+                            <a href="/admin/home" class="btn btn-light btn-round px-5">Go Back</a>
+                        </form>
+                        <!-- end of sign up form -->
+                    </div> <!-- end of text-box -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <%- include('../layouts/adminFooter.ejs') %>
